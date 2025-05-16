@@ -1,0 +1,195 @@
+/* Variables y estilos base */
+:root {
+    --primary: #6D5D6E;
+    --secondary: #4F4557;
+    --accent: #F4EEE0;
+    --light: #F8F5F1;
+    --dark: #393646;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    text-align: center;
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 Q50,80 0,100 Z"></path></svg>');
+    background-size: 100% 100%;
+    opacity: 0.3;
+}
+
+.header__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    margin: 0;
+    position: relative;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.header__subtitle {
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    opacity: 0.9;
+    position: relative;
+}
+
+/* Wave divider */
+.wave {
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: -1px;
+}
+
+.wave svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wave__path {
+    fill: var(--accent);
+}
+
+.wave__path--first {
+    opacity: 0.25;
+}
+
+.wave__path--second {
+    opacity: 0.5;
+}
+
+/* Emotions container */
+.emotions-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: -2rem auto 3rem auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Emotion cards */
+.emotion {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+}
+
+.emotion::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(109,93,110,0.1), rgba(79,69,87,0.2));
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.emotion:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.emotion:hover::after {
+    opacity: 1;
+}
+
+.emotion__icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.emotion:hover .emotion__icon {
+    transform: scale(1.1);
+}
+
+.emotion__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--secondary);
+    transition: color 0.3s ease;
+}
+
+.emotion:hover .emotion__name {
+    color: var(--primary);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    margin-top: auto;
+    background-color: var(--dark);
+    color: white;
+    font-weight: 300;
+}
+
+.footer__text {
+    margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header__title {
+        font-size: 2.2rem;
+    }
+    
+    .emotions-container {
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+    
+    .emotion {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .emotion__icon {
+        font-size: 3rem;
+    }
+}
