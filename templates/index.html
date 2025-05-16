@@ -1,61 +1,125 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libros que abrazan emociones</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Recomendador de Libros</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f5f5f0;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #8b4513;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        
+        .emociones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .emocion {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #5d4037;
+            font-weight: bold;
+            border: 2px solid #d7ccc8;
+            transition: all 0.3s;
+        }
+        
+        .emocion:hover {
+            background: #5d4037;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .libro {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8b4513;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <h1 class="header__title">Libros que abrazan emociones</h1>
-        <p class="header__subtitle">Descubre lecturas que resuenan con tu estado de ánimo</p>
+    <header>
+        <h1>Recomendador de Libros</h1>
+        <p>Encuentra tu próxima lectura según tu estado de ánimo</p>
     </header>
     
-    <div class="wave">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path class="wave__path wave__path--first" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"></path>
-            <path class="wave__path wave__path--second" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"></path>
-            <path class="wave__path wave__path--third" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
-        </svg>
-    </div>
-    
-    <main class="emotions-container">
-        <a href="#" class="emotion">
-            <div class="emotion__icon">😊</div>
-            <span class="emotion__name">Alegría</span>
-        </a>
+    <main>
+        <h2 style="text-align: center; color: #5d4037;">Selecciona una emoción:</h2>
         
-        <a href="#" class="emotion">
-            <div class="emotion__icon">😢</div>
-            <span class="emotion__name">Tristeza</span>
-        </a>
+        <div class="emociones">
+            <a href="#alegria" class="emocion">Alegría</a>
+            <a href="#tristeza" class="emocion">Tristeza</a>
+            <a href="#amor" class="emocion">Amor</a>
+            <a href="#misterio" class="emocion">Misterio</a>
+            <a href="#aventura" class="emocion">Aventura</a>
+        </div>
         
-        <a href="#" class="emotion">
-            <div class="emotion__icon">💪</div>
-            <span class="emotion__name">Motivación</span>
-        </a>
+        <!-- Sección de Alegría -->
+        <div id="alegria">
+            <h3 style="color: #8b4513;">Libros para la Alegría</h3>
+            
+            <div class="libro">
+                <h4>El Principito</h4>
+                <p><strong>Autor:</strong> Antoine de Saint-Exupéry</p>
+                <p>Un clásico atemporal que celebra la amistad y la inocencia.</p>
+            </div>
+            
+            <div class="libro">
+                <h4>El Alquimista</h4>
+                <p><strong>Autor:</strong> Paulo Coelho</p>
+                <p>Una inspiradora historia sobre seguir tus sueños.</p>
+            </div>
+        </div>
         
-        <a href="#" class="emotion">
-            <div class="emotion__icon">🏝️</div>
-            <span class="emotion__name">Soledad</span>
-        </a>
-        
-        <a href="#" class="emotion">
-            <div class="emotion__icon">😨</div>
-            <span class="emotion__name">Miedo</span>
-        </a>
-        
-        <a href="#" class="emotion">
-            <div class="emotion__icon">❤️</div>
-            <span class="emotion__name">Amor</span>
-        </a>
+        <!-- Sección de Tristeza -->
+        <div id="tristeza">
+            <h3 style="color: #8b4513;">Libros para la Tristeza</h3>
+            
+            <div class="libro">
+                <h4>El Lobo Estepario</h4>
+                <p><strong>Autor:</strong> Hermann Hesse</p>
+                <p>Una profunda reflexión sobre la soledad y la búsqueda de significado.</p>
+            </div>
+        </div>
     </main>
     
-    <footer class="footer">
-        <p class="footer__text">Diseñado con ❤️ para lectores sensibles</p>
+    <footer>
+        <p>© 2023 Recomendador de Libros | Creado con pasión literaria</p>
     </footer>
 </body>
 </html>
