@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Recomendador de Libros{% endblock %}
+
+{% block content %}
+
+<!-- Buscador -->
+<div class="buscador">
+    <form method="get" action="{% url 'index' %}" class="d-flex justify-content-center">
+        <input type="text" name="q" class="form-control w-50 me-2" placeholder="Buscar libros...">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</div>
+
+<!-- Resultados -->
+{% if libros %}
+    <h3>Resultados para: "{{ query }}"</h3>
+    {% for libro in libros %}
+        <div class="libro" style="background:white; padding:20px; margin-bottom:20px; border-left:5px solid #8b4513; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            {% if libro.imagen %}
+                <img src="{{ libro.imagen }}" alt="Portada del libro" style="max-height:200px; display:block; margin-bottom:10px;">
+            {% endif %}
+            <h4>{{ libro.titulo }}</h4>
+            <p><strong>Autor:</strong> {{ libro.autores|join:", " }}</p>
+            <p>{{ libro.descripcion|truncatewords:30 }}</p>
+        </div>
+    {% endfor %}
+{% elif query %}
+    <p>No se encontraron resultados para "{{ query }}".</p>
+{% endif %}
+
+{% endblock %}
