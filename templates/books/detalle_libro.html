@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Libro{% endblock %}
+
+{% block content %}
+
+<div class="card mb-4" style="max-width: 700px; margin: auto;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      {% if book.thumbnail %}
+      <img src="{{ book.thumbnail }}" alt="Portada de {{ book.title }}" class="img-fluid rounded-start">
+      {% else %}
+      <img src="https://via.placeholder.com/150x220?text=Sin+Imagen" alt="Sin imagen" class="img-fluid rounded-start">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h2 class="card-title">{{ book.title }}</h2>
+        {% if book.authors %}
+          <p class="card-text"><strong>Autor(es):</strong> {{ book.authors }}</p>
+        {% endif %}
+        {% if book.description %}
+          <p class="card-text">{{ book.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<h3>Reseñas</h3>
+{% for review in reviews %}
+  <div class="mb-3 border rounded p-3">
+    <strong>{{ review.user.username }}</strong> ({{ review.fecha|date:"d/m/Y H:i" }}):<br>
+    {{ review.comment }}
+  </div>
+{% empty %}
+  <p>No hay reseñas aún.</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+  <hr>
+  <h4>Escribe una reseña:</h4>
+  <form method="post" style="max-width: 700px; margin: auto;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enviar</button>
+  </form>
+{% else %}
+  <p><a href="{% url 'login' %}">Inicia sesión</a> para dejar una reseña.</p>
+{% endif %}
+
+{% endblock %}

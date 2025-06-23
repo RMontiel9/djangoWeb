@@ -16,17 +16,91 @@
 {% if libros %}
     <h3>Resultados para: "{{ query }}"</h3>
     {% for libro in libros %}
-        <div class="libro" style="background:white; padding:20px; margin-bottom:20px; border-left:5px solid #8b4513; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
-            {% if libro.imagen %}
-                <img src="{{ libro.imagen }}" alt="Portada del libro" style="max-height:200px; display:block; margin-bottom:10px;">
+    <div class="libro"
+         data-id="{{ libro.google_id }}"
+         data-titulo="{{ libro.titulo }}"
+         data-autores="{{ libro.autores|join:", " }}"
+         data-imagen="{{ libro.imagen }}"
+         style="background:white; padding:20px; margin-bottom:20px; border-left:5px solid #8b4513; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+         
+        {% if libro.imagen %}
+            <img src="{{ libro.imagen }}" alt="Portada del libro" style="max-height:200px; display:block; margin-bottom:10px;">
+        {% endif %}
+
+        <h4>
+            <a href="{% url 'book_detail' libro.google_id %}" style="text-decoration: none; color: inherit;">
+                {{ libro.titulo }}
+            </a>
+        </h4>
+
+        <p><strong>Autor:</strong> {{ libro.autores|join:", " }}</p>
+        <p>{{ libro.descripcion|truncatewords:30 }}</p>
+
+        {% if user.is_authenticated %}
+            {% if libro.google_id in favoritos_google_ids %}
+                <button class="btn btn-warning toggle-favorito" data-favorito="true">
+                    💛 Guardado
+                </button>
+            {% else %}
+                <button class="btn btn-outline-warning toggle-favorito" data-favorito="false">
+                    🤍 Agregar a favoritos
+                </button>
             {% endif %}
-            <h4>{{ libro.titulo }}</h4>
-            <p><strong>Autor:</strong> {{ libro.autores|join:", " }}</p>
-            <p>{{ libro.descripcion|truncatewords:30 }}</p>
-        </div>
-    {% endfor %}
+        {% else %}
+            <p><a href="{% url 'login' %}">Inicia sesión</a> para guardar este libro.</p>
+        {% endif %}
+
+    </div>
+{% endfor %}
+
 {% elif query %}
     <p>No se encontraron resultados para "{{ query }}".</p>
 {% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".toggle-favorito").forEach(boton => {
+            boton.addEventListener("click", () => {
+                const contenedor = boton.closest(".libro");
+                const google_id = contenedor.dataset.id;
+    
+                const data = {
+                    google_id: google_id,
+                    title: contenedor.dataset.titulo,
+                    authors: contenedor.dataset.autores,
+                    thumbnail: contenedor.dataset.imagen
+                };
+    
+                fetch("{% url 'agregar_favorito' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.estado === "agregado") {
+                        boton.textContent = "💛 Guardado";
+                        boton.classList.remove("btn-outline-warning");
+                        boton.classList.add("btn-warning");
+                        boton.dataset.favorito = "true";
+                    } else if (data.estado === "eliminado") {
+                        boton.textContent = "🤍 Agregar a favoritos";
+                        boton.classList.remove("btn-warning");
+                        boton.classList.add("btn-outline-warning");
+                        boton.dataset.favorito = "false";
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(() => alert("Error al procesar favorito."));
+            });
+        });
+    });
+    </script>
+    
 
 {% endblock %}
+
+

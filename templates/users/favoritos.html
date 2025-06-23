@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Favoritos{% endblock %}
+
+{% block content %}
+<h2>Mis libros favoritos</h2>
+
+{% if libros %}
+    <ul>
+    {% for libro in libros %}
+        <li>
+            <img src="{{ libro.thumbnail }}" alt="Portada" style="max-height:100px;">
+            <strong>{{ libro.title }}</strong> - {{ libro.authors }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tienes libros favoritos guardados.</p>
+{% endif %}
+
+{% endblock %}
